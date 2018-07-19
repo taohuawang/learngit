@@ -1,0 +1,42 @@
+package com.qiwang.drools
+import com.qiwang.entity.Person
+import com.qiwang.entity.School
+rule "Hello World"
+    no-loop true
+    when
+       $p:Person(name =="张三");
+    then
+       $p.setAge(50);
+       $p.setAddress("嘉定区于田大厦");
+        update($p);
+        System.out.println($p.getAddress());
+    end
+
+rule "Good Bye"
+    no-loop true
+    when
+       $p:Person(identity =="teacher",age > 40);
+    then
+       $p.setName("李四");
+       $p.setDescription("say goodbye");
+       update($p);
+       System.out.println($p.getName());
+       System.out.println("aaaaaaaa");
+
+    end
+
+    rule test001
+    when
+        $s:School();
+        $p:Person(name contains $s.name);
+    then
+        System.out.println("成功使用了contains");
+     end
+
+     rule test002
+         when
+             $s:School();
+             $p:Person(age not contains $s.count);
+         then
+             System.out.println("成功使用了not contains");
+          end
